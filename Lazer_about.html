@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GoMLazer</title>
+    <style type="text/css">
+    body {
+        margin: 0;
+        background-color: #D5DDE8;
+    }
+
+
+    ul.head {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    ul.footer {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #111;
+        border-bottom: 4px solid greenyellow;
+    }
+
+    .active {
+        border-bottom: 4px solid greenyellow;
+        /*background-color: #D5DDE8;
+        color: #333;*/
+    }
+
+
+    img.home {
+        float: right;
+        margin: 0;
+        width: 30%;
+        height: 30%
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="head">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="#news">About </a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">Else</a></li>
+        <img src="img/Lazerlogo2.png" width="90px" height="90px">
+    </ul>
+    <div style="width:100%;height: 95px;"></div>
+    <img src="img/Lazer01.png" class="home">
+    <div style="margin: 15% 20% 0 20%;">
+        <div>
+            <p style="font-size: 64px;text-align: center;">HI I am Lazer Chang <br>This is About Me.</br>
+            </p>
+        </div>
+    </div>
+    <ul class="footer">
+        <p style="color: white;text-align: center;">Copyright © 2024 Lazer</p>
+    </ul>
+</body>
+
+</html>
