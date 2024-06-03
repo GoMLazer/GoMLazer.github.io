@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各國旅遊聲量變化</title>
+    <link rel="icon" href="https://i.ibb.co/LYB0ZF5/world.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 85px;
+    }
+
+    canvas {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    button {
+        margin: 5px;
+        padding: 5px 5px;
+        font-size: 14px;
+        background-color: lightgray;
+        border-bottom-right-radius: 5px;
+        border: 0px;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: middle;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #B8B8DC;
+    }
+
+    footer.banner {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #333;
+        color: white;
+        text-align: center;
+        font-size: 10px;
+        padding: 8px;
+    }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li><a href="https:/gomlazer.github.io/text.html">研究介紹</a></li>
+        <li><a href="https://gomlazer.github.io/picture.html">相關性</a></li>
+        <li><a class="active">各國數據</a></li>
+    </ul>
+    <div>
+        <h1>2014~2023年各國旅遊聲量與實際前往旅客數量之關係</h1>
+        <h2>點擊國家以查看折線圖</h2>
+    </div>
+    <div>
+        <button onclick="showChart('data1')">香港</button>
+        <button onclick="showChart('data2')">澳門</button>
+        <button onclick="showChart('data3')">中國</button>
+        <button onclick="showChart('data4')">日本</button>
+        <button onclick="showChart('data5')">韓國</button>
+        <button onclick="showChart('data6')">新加坡</button>
+        <button onclick="showChart('data7')">馬來西亞</button>
+        <button onclick="showChart('data8')">泰國</button>
+        <button onclick="showChart('data9')">菲律賓</button>
+        <button onclick="showChart('data10')">越南</button>
+    </div>
+    <canvas id="chartCanvas" width="600" height="300" margin-top="20"></canvas>
+    <script>
+    let chart;
+
+    const datasets = {
+        data1: [{
+                label: '香港-聲量',
+                data: [900000, 1940000, 1740000, 1060000, 1822000, 974000, 220000, 180000, 86000, 188000],
+                fill: false
+            },
+            {
+                label: '香港-實際到訪人數',
+                data: [2018129, 2008153, 1902647, 1773252, 1696265, 1676374, 158008, 12692, 52725, 743443],
+                fill: false
+            }
+        ],
+        data2: [{
+                label: '澳門-聲量',
+                data: [272000, 1296000, 886000, 210000, 644000, 302000, 38000, 12000, 2000, 50000],
+                fill: false
+            },
+            {
+                label: '澳門-實際到訪人數',
+                data: [493188, 527144, 598850, 589147, 605468, 596721, 54537, 11468, 7556, 275979],
+                fill: false
+            }
+        ],
+        data3: [{
+                label: '中國-聲量',
+                data: [1030000, 1284000, 1340000, 1382000, 1514000, 796000, 286000, 134000, 120000, 128000],
+                fill: false
+            },
+            {
+                label: '中國-實際到訪人數',
+                data: [3267238, 3403920, 3685477, 3928352, 4172704, 4043686, 414634, 128637, 165895, 1761134],
+                fill: false
+            }
+        ],
+        data4: [{
+                label: '日本-聲量',
+                data: [2346000, 2872000, 1714000, 4422000, 4596000, 2288000, 1070000, 590000, 460000, 906000],
+                fill: false
+            },
+            {
+                label: '日本-實際到訪人數',
+                data: [2971846, 3797879, 4295240, 4615873, 4825948, 4911681, 697981, 14049, 354219, 4225804],
+                fill: false
+            }
+        ],
+        data5: [{
+                label: '韓國-聲量',
+                data: [826000, 1704000, 1768000, 1870000, 1000000, 694000, 132000, 48000, 56000, 158000],
+                fill: false
+            },
+            {
+                label: '韓國-實際到訪人數',
+                data: [626694, 500100, 808420, 888526, 1086516, 1209062, 163953, 8269, 78318, 954693],
+                fill: false
+            }
+        ],
+        data6: [{
+                label: '新加坡-聲量',
+                data: [580000, 1354000, 1320000, 678000, 962000, 468000, 176000, 124000, 52000, 164000],
+                fill: false
+            },
+            {
+                label: '新加坡-實際到訪人數',
+                data: [283925, 318516, 319915, 326634, 354667, 387485, 65674, 13656, 78961, 316715],
+                fill: false
+            }
+        ],
+        data7: [{
+                label: '馬來西亞-聲量',
+                data: [298000, 518000, 970000, 314000, 390000, 326000, 98000, 76000, 30000, 116000],
+                fill: false
+            },
+            {
+                label: '馬來西亞-實際到訪人數',
+                data: [198902, 201631, 245298, 296370, 316926, 299959, 49913, 1373, 29909, 245136],
+                fill: false
+            }
+        ],
+        data8: [{
+                label: '泰國-聲量',
+                data: [686000, 462000, 1544000, 1650000, 1092000, 566000, 244000, 76000, 48000, 318000],
+                fill: false
+            },
+            {
+                label: '泰國-實際到訪人數',
+                data: [419133, 599523, 532787, 553804, 679145, 830166, 127693, 7976, 104892, 777326],
+                fill: false
+            }
+        ],
+        data9: [{
+                label: '菲律賓-聲量',
+                data: [224000, 188000, 262000, 422000, 768000, 334000, 58000, 64000, 58000, 46000],
+                fill: false
+            },
+            {
+                label: '菲律賓-實際到訪人數',
+                data: [133583, 180091, 231801, 236597, 246691, 331792, 49093, 2099, 29027, 208399],
+                fill: false
+            }
+        ],
+        data10: [{
+                label: '越南-聲量',
+                data: [76000, 254000, 318000, 552000, 420000, 276000, 94000, 30000, 20000, 202000],
+                fill: false
+            },
+            {
+                label: '越南-實際到訪人數',
+                data: [339107, 409013, 465944, 564002, 659123, 853257, 158286, 11123, 133203, 853859],
+                fill: false
+            }
+        ],
+
+    };
+
+    const colors = [
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 159, 64, 1)'
+    ];
+
+    function showChart(datasetKey) {
+        const ctx = document.getElementById('chartCanvas').getContext('2d');
+
+        if (chart) {
+            chart.destroy();
+        }
+
+        const data = {
+            labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+            datasets: datasets[datasetKey]
+        };
+
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    showChart('data1');
+    </script>
+</body>
+<footer class="banner">Copyright © 2024 地理114張弘逸 地理115莊沛珣.</footer>
+
+</html>
